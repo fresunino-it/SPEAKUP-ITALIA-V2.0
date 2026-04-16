@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Verbi in Azione — SpeakUp Italia</title>
+<link rel="icon" href="assets/favicon.png"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<audio id="success-sound" src="assets/success.wav" preload="auto"></audio>
+<div class="container">
+  <header class="header">
+    <div class="brand">
+      <img src="assets/logo.png" alt="SpeakUp Italia logo"/>
+      <h1>Lezione 1</h1>
+    </div>
+    <nav><a class="btn" href="index.html">← Home</a></nav>
+  </header>
+  <main>
+    <section class="card">
+      <h2>Verbi in Azione</h2>
+      <p class="small">Trascina il verbo corretto nella frase (o toccalo su mobile).</p>
+      <div id="phrases"></div>
+      <p style="margin-top:12px">
+        <button id="reset" class="btn">🔄 Reset</button>
+        <a class="btn btn-blue" href="index.html">← Torna</a>
+      </p>
+      <p class="small" id="feedback" role="status" aria-live="polite">—</p>
+    </section>
+  </main>
+</div>
+<script src="app.js"></script>
+<script>
+// ── Game 1: Drag & Drop Verbi ─────────────────────────────────────────────
+(function () {
+  "use strict";
+
+  const data = [
+    { phrase: "Io ___ (mangiare) una mela.", verb: "mangio" },
+    { phrase: "Tu ___ (parlare) inglese.",   verb: "parli" },
+    { phrase: "Noi ___ (andare) a scuola.",  verb: "andiamo" },
+  ];
+
+  // Second-pass: validate data integrity at runtime
+  if (!Array.isArray(data) || data.some(d => !d.phrase || !d.verb)) {
+    document.getElementById("feedback").textContent =
+      "❌ Errore nei dati del gioco. Ricarica la pagina.";
+    return;
+  }
+
+  let selected = null; // for touch/click fallback
+
+  function build() {
+    const el = document.getElementById("phrases");
+    if (!el) return;
+    el.innerHTML = "";
+
+    data.forEach((d, i) => {
+      const box = document.createElement("div");
+      box.className = "resource";
+      box.style.marginBottom = "10px";
+      box.innerHTML =
+        "<div>" + d.phrase.replace("___", "<strong>_____</strong>") + "</div>" +
+        `<div id="slot${i}" class="drop-slot"
+          style="min-height:36px;margin-top:6px;padding:6px;
+          border:1px dashed rgba(0,0,0,0.15);border-radius:8px;cursor:pointer"
+          data-index="${i}"></div>`;
+      el.appendChild(box);
+    });
+
+    // Verb palette (shuffled)
+    const pal = document.createElement("div");
+    pal.style.marginTop = "12px";
+    const verbs = [...data.map(x => x.verb)].sort(() => Math.random() - 0.5);
+
+    verbs.forEach(v => {
+      const b = document.createElement("button");
+      b.className = "btn";
+      b.draggable = true;
+      b.style.marginRight = "8px";
+      b.style.marginBottom = "6px";
+      b.textContent = v;
+      b.dataset.verb = v;
+
+      // Drag support
+      b.addEventListener("dragstart", e => {
+        e.dataTransfer.setData("text/plain", v);
+        selected = null;
+      });
+
+      // Click/touch support (select → place)
+      b.addEventListener("click", () => {
+        if (selected === v) { selected = null; b.style.outline = ""; return; }
+        document.querySelectorAll("[data-verb]").forEach(x => x.style.outline = "");
+        selected = v;
+        b.style.outline = "2px solid var(--blue)";
+      });
+
+      pal.appendChild(b);
+    });
+
+    el.appendChild(pal);
+
+    // Drop slots
+    data.forEach((_, i) => {
+      const slot = document.getElementById("slot" + i);
+      if (!slot) return;
+
+      slot.addEventListener("dragover", e => e.preventDefault());
+      slot.addEventListener("drop", e => {
+        e.preventDefault();
+        const v = e.dataTransfer.getData("text/plain");
+        if (v) { slot.textContent = v; check(); }
+      });
+
+      // Click to place selected verb
+      slot.addEventListener("click", () => {
+        if (selected) { slot.textContent = selected; selected = null;
+          document.querySelectorAll("[data-verb]").forEach(x => x.style.outline = "");
+          check();
+        }
+      });
+    });
+  }
+
+  function check() {
+    let correct = 0;
+    data.forEach((d, i) => {
+      const slot = document.getElementById("slot" + i);
+      if (!slot) return;
+      const filled = slot.textContent.trim();
+      if (filled === d.verb) {
+        correct++;
+        slot.style.borderColor = "rgba(0,200,0,0.4)";
+        slot.style.background = "rgba(0,200,0,0.06)";
+      } else if (filled) {
+        slot.style.borderColor = "rgba(255,0,0,0.3)";
+        slot.style.background = "rgba(255,0,0,0.04)";
+      }
+    });
+    const fb = document.getElementById("feedback");
+    fb.textContent = `${correct} / ${data.length} corretti`;
+    if (correct === data.length) {
+      fb.textContent = "🎉 Completato! Ottimo lavoro!";
+      playSuccess();
+    }
+  }
+
+  const resetBtn = document.getElementById("reset");
+  if (resetBtn) {
+    resetBtn.addEventListener("click", () => {
+      selected = null;
+      build();
+      document.getElementById("feedback").textContent = "—";
+    });
+  }
+
+  build();
+})();
+</script>
+</body>
+</html>

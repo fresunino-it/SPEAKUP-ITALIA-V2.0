@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SpeakUp Italia — Metodo KiSS</title>
+<meta name="description" content="SpeakUp Italia - lezioni interattive online di italiano e spagnolo con il metodo KiSS. Verbi, giochi e attività pratiche." />
+<meta name="keywords" content="italiano, spagnolo, lezioni online, KiSS, verbi, giochi linguistici" />
+<link rel="icon" href="assets/favicon.png" sizes="32x32" />
+<meta property="og:title" content="SpeakUp Italia — Metodo KiSS" />
+<meta property="og:description" content="Lezioni interattive online di italiano e spagnolo: verbi, giochi e attività pratiche." />
+<meta property="og:image" content="assets/logo.png" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<audio id="success-sound" src="assets/success.wav" preload="auto"></audio>
+<div class="container">
+  <header class="header" role="banner">
+    <div class="brand" role="img" aria-label="Logo SpeakUp Italia">
+      <img src="assets/logo.png" alt="SpeakUp Italia logo" />
+      <div>
+        <h1>SpeakUp Italia</h1>
+        <div class="small">Metodo KiSS — lezioni interattive di italiano e spagnolo</div>
+      </div>
+    </div>
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+      <button id="to-it" class="btn" aria-pressed="true">IT</button>
+      <button id="to-es" class="btn" aria-pressed="false">ES</button>
+      <a class="btn" href="#lezioni">Lezioni</a>
+      <a class="btn" href="#contatti">Contatti</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home" aria-labelledby="hero-title">
+      <img src="assets/logo.png" class="logo-hero" alt="" aria-hidden="true" />
+      <h2 id="hero-title">Benvenuti su SpeakUp Italia</h2>
+      <p class="small" data-lang="it">Lezioni online con metodo KiSS: attività pratiche, verbi e giochi per migliorare la produzione orale.</p>
+      <p class="small" data-lang="es" style="display:none">Clases online con método KiSS: actividades prácticas, verbos y juegos para mejorar la producción oral.</p>
+
+      <div class="actions">
+        <a class="btn btn-blue link-blue" href="https://us05web.zoom.us/j/85152068635?pwd=VWI550PTkO1hnnttNRE9ayTUAIPUbB.1" target="_blank" rel="noopener">🔵 Entra su Zoom</a>
+        <a class="btn btn-whatsapp whatsapp-link" href="#" data-lang="it">💬 Chatta su WhatsApp</a>
+        <a class="btn btn-whatsapp whatsapp-link" href="#" data-lang="es" style="display:none">💬 Chatea en WhatsApp</a>
+
+        <p data-lang="it" class="small">
+          ⚠️ Se la chat non si apre nell'app desktop di WhatsApp, verrà aperta in WhatsApp Web.
+          Assicurati di essere loggato oppure usa il tuo smartphone.
+        </p>
+        <p data-lang="es" class="small" style="display:none">
+          ⚠️ Si el chat no se abre en la aplicación de escritorio de WhatsApp, se abrirá en WhatsApp Web.
+          Asegúrate de haber iniciado sesión o usa tu teléfono móvil.
+        </p>
+      </div>
+
+      <div class="cards" id="lezioni" aria-label="Lezioni">
+        <article class="card">
+          <h3>Lezione 1 — Verbi in Azione</h3>
+          <p class="small">Esercizi guidati, drag &amp; drop e attività orale.</p>
+          <p><a class="link-blue" href="game1.html">Vai alla lezione</a></p>
+        </article>
+        <article class="card">
+          <h3>Lezione 2 — Sfida delle Parole</h3>
+          <p class="small">Matching e quiz per consolidare il vocabolario.</p>
+          <p><a class="link-blue" href="game2.html">Vai alla lezione</a></p>
+        </article>
+        <article class="card">
+          <h3>Lezione 3 — Cultura Quiz</h3>
+          <p class="small">Domande e curiosità su Italia e Spagna.</p>
+          <p><a class="link-blue" href="game3.html">Vai alla lezione</a></p>
+        </article>
+      </div>
+    </section>
+
+    <section id="contatti" style="margin-top:18px">
+      <div class="card">
+        <h3>Contattaci</h3>
+        <p class="small">Per informazioni e iscrizioni usa WhatsApp o il modulo qui sotto.</p>
+        <!-- ⚠️ Sostituisci "your-form-id" con il tuo ID Formspree reale -->
+        <form action="https://formspree.io/f/your-form-id" method="POST" novalidate>
+          <label class="small">Nome<br>
+            <input name="name" required minlength="2" autocomplete="name"
+              style="width:100%;padding:8px;margin-top:6px;border-radius:8px;border:1px solid rgba(0,0,0,0.12)">
+          </label>
+          <label class="small" style="display:block;margin-top:8px">Email<br>
+            <input type="email" name="email" required autocomplete="email"
+              style="width:100%;padding:8px;margin-top:6px;border-radius:8px;border:1px solid rgba(0,0,0,0.12)">
+          </label>
+          <label class="small" style="display:block;margin-top:8px">Messaggio<br>
+            <textarea name="message" rows="4" required minlength="10"
+              style="width:100%;padding:8px;margin-top:6px;border-radius:8px;border:1px solid rgba(0,0,0,0.12)"></textarea>
+          </label>
+          <div style="margin-top:10px">
+            <button class="btn btn-blue" type="submit">Invia richiesta</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="small" id="social">
+      Seguici:
+      <a href="https://www.instagram.com/speakupitalian?igsh=MTh2dGd5anRtajkzNg==" target="_blank" rel="noopener">Instagram</a> ·
+      <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a> ·
+      <a href="https://tiktok.com" target="_blank" rel="noopener">TikTok</a>
+    </div>
+    <div class="small" style="margin-top:8px">© 2025 SpeakUp Italia — Progetto educativo di italiano e spagnolo</div>
+  </footer>
+</div>
+
+<a class="whatsapp-fab whatsapp-link" href="#" aria-label="Apri WhatsApp">💬</a>
+
+<!-- app.js unificato — non includere script.js -->
+<script src="app.js"></script>
+</body>
+</html>

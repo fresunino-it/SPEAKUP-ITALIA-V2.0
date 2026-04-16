@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Sfida delle Parole — SpeakUp Italia</title>
+<link rel="icon" href="assets/favicon.png"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<audio id="success-sound" src="assets/success.wav" preload="auto"></audio>
+<div class="container">
+  <header class="header">
+    <div class="brand">
+      <img src="assets/logo.png" alt="SpeakUp Italia logo"/>
+      <h1>Lezione 2</h1>
+    </div>
+    <nav><a class="btn" href="index.html">← Home</a></nav>
+  </header>
+  <main>
+    <section class="card">
+      <h2>Sfida delle Parole</h2>
+      <p class="small">Abbina la parola alla definizione corretta.</p>
+      <div id="quiz"></div>
+      <div id="score-box" class="small" role="status" aria-live="polite" style="margin-top:12px"></div>
+      <p style="margin-top:12px">
+        <button id="reset" class="btn">🔄 Riprova</button>
+        <a class="btn btn-blue" href="index.html">← Torna</a>
+      </p>
+    </section>
+  </main>
+</div>
+<script src="app.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  const quiz = [
+    { q: "biblioteca", opts: ["Luogo con libri", "Luogo dove si cucina", "Luogo per imparare"], a: "Luogo con libri" },
+    { q: "cucina",     opts: ["Luogo con libri", "Luogo dove si cucina", "Luogo per imparare"], a: "Luogo dove si cucina" },
+    { q: "scuola",     opts: ["Luogo con libri", "Luogo dove si cucina", "Luogo per imparare"], a: "Luogo per imparare" },
+  ];
+
+  // Second-pass: validate quiz data
+  if (!Array.isArray(quiz) || quiz.some(q => !q.q || !q.a || !Array.isArray(q.opts) || !q.opts.includes(q.a))) {
+    document.getElementById("quiz").textContent = "❌ Errore nei dati. Ricarica la pagina.";
+    return;
+  }
+
+  let answered = 0; // track answered questions (not score increments) to avoid double-counting
+  let score = 0;
+
+  function build() {
+    answered = 0;
+    score = 0;
+    const el = document.getElementById("quiz");
+    const sb = document.getElementById("score-box");
+    el.innerHTML = "";
+    sb.textContent = "";
+
+    quiz.forEach((it, idx) => {
+      const card = document.createElement("div");
+      card.className = "resource";
+      card.style.marginBottom = "12px";
+      card.dataset.answered = "false"; // track per-card answer state
+
+      const title = document.createElement("strong");
+      title.textContent = `Parola: ${it.q}`;
+      card.appendChild(title);
+
+      const btnRow = document.createElement("div");
+      btnRow.style.marginTop = "8px";
+
+      const shuffled = [...it.opts].sort(() => Math.random() - 0.5);
+
+      shuffled.forEach(o => {
+        const b = document.createElement("button");
+        b.className = "btn";
+        b.style.marginRight = "8px";
+        b.style.marginBottom = "4px";
+        b.textContent = o;
+
+        b.addEventListener("click", () => {
+          // First-pass guard: ignore if this card was already answered
+          if (card.dataset.answered === "true") return;
+          card.dataset.answered = "true";
+
+          // Disable all buttons in this card
+          btnRow.querySelectorAll("button").forEach(btn => btn.disabled = true);
+
+          if (o === it.a) {
+            score++;
+            b.style.background = "linear-gradient(90deg, rgba(0,200,0,0.15), rgba(0,200,0,0.05))";
+            b.style.borderColor = "rgba(0,200,0,0.3)";
+          } else {
+            b.style.background = "linear-gradient(90deg, rgba(255,0,0,0.1), rgba(255,0,0,0.03))";
+            b.style.borderColor = "rgba(255,0,0,0.2)";
+            // Show correct answer
+            btnRow.querySelectorAll("button").forEach(btn => {
+              if (btn.textContent === it.a) {
+                btn.style.background = "linear-gradient(90deg, rgba(0,200,0,0.12), rgba(0,200,0,0.04))";
+              }
+            });
+          }
+
+          answered++;
+          const sb = document.getElementById("score-box");
+          sb.textContent = `Punteggio: ${score} / ${quiz.length}`;
+
+          if (answered === quiz.length) {
+            if (score === quiz.length) {
+              sb.textContent = `🎉 Perfetto! ${score} / ${quiz.length}!`;
+              playSuccess();
+            } else {
+              sb.textContent = `Completato: ${score} / ${quiz.length}. Riprova per migliorare!`;
+            }
+          }
+        });
+
+        btnRow.appendChild(b);
+      });
+
+      card.appendChild(btnRow);
+      el.appendChild(card);
+    });
+  }
+
+  const resetBtn = document.getElementById("reset");
+  if (resetBtn) resetBtn.addEventListener("click", build);
+
+  build();
+})();
+</script>
+</body>
+</html>

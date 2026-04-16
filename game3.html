@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Cultura Quiz — SpeakUp Italia</title>
+<link rel="icon" href="assets/favicon.png"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<audio id="success-sound" src="assets/success.wav" preload="auto"></audio>
+<div class="container">
+  <header class="header">
+    <div class="brand">
+      <img src="assets/logo.png" alt="SpeakUp Italia logo"/>
+      <h1>Lezione 3</h1>
+    </div>
+    <nav><a class="btn" href="index.html">← Home</a></nav>
+  </header>
+  <main>
+    <section class="card">
+      <h2>Cultura Quiz</h2>
+      <p class="small">Rispondi a domande sulla cultura italiana e spagnola.</p>
+      <div id="quiz3"></div>
+      <div id="res3" class="small" role="status" aria-live="polite" style="margin-top:12px"></div>
+      <p style="margin-top:12px">
+        <button id="reset" class="btn">🔄 Riprova</button>
+        <a class="btn btn-blue" href="index.html">← Torna</a>
+      </p>
+    </section>
+  </main>
+</div>
+<script src="app.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  const Qs = [
+    { q: "Capitale d'Italia?",         opts: ["Milano","Roma","Napoli"],          a: "Roma" },
+    { q: "Lingua ufficiale della Spagna?", opts: ["Spagnolo","Portoghese","Catalano"], a: "Spagnolo" },
+    { q: "Famoso pittore spagnolo?",   opts: ["Picasso","Botticelli","Canova"],   a: "Picasso" },
+  ];
+
+  // Second-pass: validate data
+  if (!Array.isArray(Qs) || Qs.some(q => !q.a || !Array.isArray(q.opts) || !q.opts.includes(q.a))) {
+    document.getElementById("quiz3").textContent = "❌ Errore nei dati. Ricarica la pagina.";
+    return;
+  }
+
+  let answered = 0;
+  let correct = 0;
+
+  function build() {
+    answered = 0;
+    correct = 0;
+    const el = document.getElementById("quiz3");
+    const res = document.getElementById("res3");
+    el.innerHTML = "";
+    res.textContent = "";
+
+    Qs.forEach(it => {
+      const card = document.createElement("div");
+      card.className = "resource";
+      card.style.marginBottom = "12px";
+      card.dataset.answered = "false";
+
+      const q = document.createElement("strong");
+      q.textContent = it.q;
+      card.appendChild(q);
+
+      const row = document.createElement("div");
+      row.style.marginTop = "8px";
+
+      const shuffled = [...it.opts].sort(() => Math.random() - 0.5);
+
+      shuffled.forEach(o => {
+        const b = document.createElement("button");
+        b.className = "btn";
+        b.style.marginRight = "8px";
+        b.style.marginBottom = "4px";
+        b.textContent = o;
+
+        b.addEventListener("click", () => {
+          if (card.dataset.answered === "true") return; // First-pass guard
+          card.dataset.answered = "true";
+          row.querySelectorAll("button").forEach(btn => btn.disabled = true);
+
+          if (o === it.a) {
+            correct++;
+            b.style.background = "linear-gradient(90deg,rgba(0,200,0,0.15),rgba(0,200,0,0.05))";
+            b.style.borderColor = "rgba(0,200,0,0.3)";
+          } else {
+            b.style.background = "linear-gradient(90deg,rgba(255,0,0,0.1),rgba(255,0,0,0.03))";
+            b.style.borderColor = "rgba(255,0,0,0.2)";
+            row.querySelectorAll("button").forEach(btn => {
+              if (btn.textContent === it.a)
+                btn.style.background = "linear-gradient(90deg,rgba(0,200,0,0.12),rgba(0,200,0,0.04))";
+            });
+          }
+
+          answered++;
+          const res = document.getElementById("res3");
+          res.textContent = `Corrette: ${correct} / ${Qs.length}`;
+
+          if (answered === Qs.length) {
+            if (correct === Qs.length) {
+              res.textContent = `🎉 Perfetto! ${correct} / ${Qs.length}!`;
+              playSuccess();
+            } else {
+              res.textContent = `Completato: ${correct} / ${Qs.length}. Riprova!`;
+            }
+          }
+        });
+
+        row.appendChild(b);
+      });
+
+      card.appendChild(row);
+      el.appendChild(card);
+    });
+  }
+
+  const resetBtn = document.getElementById("reset");
+  if (resetBtn) resetBtn.addEventListener("click", build);
+
+  build();
+})();
+</script>
+</body>
+</html>

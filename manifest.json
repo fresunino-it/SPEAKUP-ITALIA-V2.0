@@ -1,0 +1,21 @@
+{
+  "name": "SpeakUp Italia",
+  "short_name": "SpeakUp",
+  "description": "Lezioni interattive di italiano e spagnolo con il metodo KiSS",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#1a1a1e",
+  "theme_color": "#009246",
+  "orientation": "portrait-primary",
+  "lang": "it",
+  "icons": [
+    { "src": "assets/favicon.png", "sizes": "32x32",  "type": "image/png" },
+    { "src": "assets/logo.png",    "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "categories": ["education", "language"],
+  "shortcuts": [
+    { "name": "Lezione 1", "url": "/game1.html", "description": "Verbi in Azione" },
+    { "name": "Lezione 2", "url": "/game2.html", "description": "Sfida delle Parole" },
+    { "name": "Lezione 3", "url": "/game3.html", "description": "Cultura Quiz" }
+  ]
+}

@@ -1,119 +1,187 @@
 <!doctype html>
 <html lang="it">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>SpeakUp Italia — Metodo KiSS</title>
-<meta name="description" content="SpeakUp Italia - lezioni interattive online di italiano e spagnolo con il metodo KiSS. Verbi, giochi e attività pratiche." />
-<meta name="keywords" content="italiano, spagnolo, lezioni online, KiSS, verbi, giochi linguistici" />
-<link rel="icon" href="assets/favicon.png" sizes="32x32" />
-<meta property="og:title" content="SpeakUp Italia — Metodo KiSS" />
-<meta property="og:description" content="Lezioni interattive online di italiano e spagnolo: verbi, giochi e attività pratiche." />
-<meta property="og:image" content="assets/logo.png" />
-<meta property="og:type" content="website" />
-<meta name="twitter:card" content="summary_large_image" />
-<link rel="stylesheet" href="style.css" />
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>SpeakUp Italia — Metodo KiSS · Italiano e Spagnolo Online</title>
+<meta name="description" content="Lezioni interattive di italiano e spagnolo con il metodo KiSS. Verbi, giochi e conversazione reale con docenti esperti."/>
+<meta name="keywords" content="italiano online, spagnolo online, lezioni italiano, metodo KiSS, verbi italiano, corsi lingua"/>
+
+<!-- Canonical + SEO -->
+<link rel="canonical" href="https://speakupitalia.com/"/>
+
+<!-- Favicon + PWA Manifest -->
+<link rel="icon" href="assets/favicon.png" sizes="32x32"/>
+<link rel="apple-touch-icon" href="assets/logo.png"/>
+<link rel="manifest" href="manifest.json"/>
+<meta name="theme-color" content="#009246"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+<meta name="apple-mobile-web-app-title" content="SpeakUp Italia"/>
+
+<!-- Open Graph -->
+<meta property="og:title" content="SpeakUp Italia — Metodo KiSS"/>
+<meta property="og:description" content="Lezioni interattive online di italiano e spagnolo: verbi, giochi e attività pratiche."/>
+<meta property="og:image" content="https://speakupitalia.com/assets/logo.png"/>
+<meta property="og:url" content="https://speakupitalia.com/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:locale" content="it_IT"/>
+<meta property="og:site_name" content="SpeakUp Italia"/>
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="SpeakUp Italia — Metodo KiSS"/>
+<meta name="twitter:description" content="Lezioni interattive di italiano e spagnolo online."/>
+<meta name="twitter:image" content="https://speakupitalia.com/assets/logo.png"/>
+
+<!-- Security headers via meta -->
+<meta http-equiv="X-Content-Type-Options" content="nosniff"/>
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin"/>
+
+<!-- Performance: preconnect Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+<!-- Styles -->
+<link rel="stylesheet" href="style.css"/>
+
+<!-- JSON-LD Structured Data (per Google) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LanguageSchool",
+  "name": "SpeakUp Italia",
+  "description": "Lezioni interattive di italiano e spagnolo con il metodo KiSS",
+  "url": "https://speakupitalia.com",
+  "logo": "https://speakupitalia.com/assets/logo.png",
+  "sameAs": [
+    "https://www.instagram.com/speakupitalian"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer support",
+    "availableLanguage": ["Italian","Spanish"]
+  },
+  "offers": {
+    "@type": "Offer",
+    "description": "Lezioni online di italiano e spagnolo",
+    "priceCurrency": "EUR",
+    "availability": "https://schema.org/InStock"
+  }
+}
+</script>
 </head>
 <body>
+
+<!-- Skip to main content (accessibilità tastiera) -->
+<a class="skip-link" href="#main-content">Salta al contenuto principale</a>
+
 <audio id="success-sound" src="assets/success.wav" preload="auto"></audio>
+
 <div class="container">
   <header class="header" role="banner">
     <div class="brand" role="img" aria-label="Logo SpeakUp Italia">
-      <img src="assets/logo.png" alt="SpeakUp Italia logo" />
+      <img src="assets/logo.png" alt="SpeakUp Italia logo" width="64" height="64"/>
       <div>
         <h1>SpeakUp Italia</h1>
-        <div class="small">Metodo KiSS — lezioni interattive di italiano e spagnolo</div>
+        <div class="small">Metodo KiSS — lezioni di italiano e spagnolo</div>
       </div>
     </div>
-    <nav class="nav" role="navigation" aria-label="Main navigation">
-      <button id="to-it" class="btn" aria-pressed="true">IT</button>
-      <button id="to-es" class="btn" aria-pressed="false">ES</button>
+
+    <!-- Hamburger toggle (visibile solo mobile) -->
+    <button class="nav-toggle" id="navToggle" aria-label="Apri menu di navigazione" aria-expanded="false" aria-controls="mainNav">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <line x1="3" y1="6"  x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+
+    <nav class="nav" id="mainNav" role="navigation" aria-label="Navigazione principale">
+      <button id="to-it" class="btn" aria-pressed="true">🇮🇹 IT</button>
+      <button id="to-es" class="btn" aria-pressed="false">🇪🇸 ES</button>
       <a class="btn" href="#lezioni">Lezioni</a>
       <a class="btn" href="#contatti">Contatti</a>
     </nav>
   </header>
 
-  <main>
+  <main id="main-content">
     <section class="hero" id="home" aria-labelledby="hero-title">
-      <img src="assets/logo.png" class="logo-hero" alt="" aria-hidden="true" />
+      <img src="assets/logo.png" class="logo-hero" alt="" aria-hidden="true" width="220" height="220" loading="eager"/>
       <h2 id="hero-title">Benvenuti su SpeakUp Italia</h2>
       <p class="small" data-lang="it">Lezioni online con metodo KiSS: attività pratiche, verbi e giochi per migliorare la produzione orale.</p>
       <p class="small" data-lang="es" style="display:none">Clases online con método KiSS: actividades prácticas, verbos y juegos para mejorar la producción oral.</p>
 
       <div class="actions">
-        <a class="btn btn-blue link-blue" href="https://us05web.zoom.us/j/85152068635?pwd=VWI550PTkO1hnnttNRE9ayTUAIPUbB.1" target="_blank" rel="noopener">🔵 Entra su Zoom</a>
-        <a class="btn btn-whatsapp whatsapp-link" href="#" data-lang="it">💬 Chatta su WhatsApp</a>
-        <a class="btn btn-whatsapp whatsapp-link" href="#" data-lang="es" style="display:none">💬 Chatea en WhatsApp</a>
-
-        <p data-lang="it" class="small">
-          ⚠️ Se la chat non si apre nell'app desktop di WhatsApp, verrà aperta in WhatsApp Web.
-          Assicurati di essere loggato oppure usa il tuo smartphone.
-        </p>
-        <p data-lang="es" class="small" style="display:none">
-          ⚠️ Si el chat no se abre en la aplicación de escritorio de WhatsApp, se abrirá en WhatsApp Web.
-          Asegúrate de haber iniciado sesión o usa tu teléfono móvil.
-        </p>
+        <a class="btn btn-blue" href="https://us05web.zoom.us/j/85152068635?pwd=VWI550PTkO1hnnttNRE9ayTUAIPUbB.1" target="_blank" rel="noopener noreferrer">🔵 Entra su Zoom</a>
+        <a class="btn btn-whatsapp whatsapp-link" href="#" data-lang="it" rel="noopener noreferrer">💬 Chatta su WhatsApp</a>
+        <a class="btn btn-whatsapp whatsapp-link" href="#" data-lang="es" style="display:none" rel="noopener noreferrer">💬 Chatea en WhatsApp</a>
       </div>
+      <p data-lang="it" class="small">⚠️ Se la chat non si apre nell'app desktop, verrà aperta in WhatsApp Web. Assicurati di essere loggato oppure usa il tuo smartphone.</p>
+      <p data-lang="es" class="small" style="display:none">⚠️ Si el chat no se abre en el escritorio, se abrirá en WhatsApp Web. Asegúrate de haber iniciado sesión o usa tu smartphone.</p>
 
-      <div class="cards" id="lezioni" aria-label="Lezioni">
+      <!-- Lezioni -->
+      <div class="cards" id="lezioni" aria-label="Lezioni disponibili">
         <article class="card">
           <h3>Lezione 1 — Verbi in Azione</h3>
           <p class="small">Esercizi guidati, drag &amp; drop e attività orale.</p>
-          <p><a class="link-blue" href="game1.html">Vai alla lezione</a></p>
+          <p><a class="link-blue" href="game1.html">Vai alla lezione →</a></p>
         </article>
         <article class="card">
           <h3>Lezione 2 — Sfida delle Parole</h3>
           <p class="small">Matching e quiz per consolidare il vocabolario.</p>
-          <p><a class="link-blue" href="game2.html">Vai alla lezione</a></p>
+          <p><a class="link-blue" href="game2.html">Vai alla lezione →</a></p>
         </article>
         <article class="card">
           <h3>Lezione 3 — Cultura Quiz</h3>
           <p class="small">Domande e curiosità su Italia e Spagna.</p>
-          <p><a class="link-blue" href="game3.html">Vai alla lezione</a></p>
+          <p><a class="link-blue" href="game3.html">Vai alla lezione →</a></p>
         </article>
       </div>
     </section>
 
-    <section id="contatti" style="margin-top:18px">
+    <section id="contatti" style="margin-top:24px" aria-labelledby="contatti-title">
       <div class="card">
-        <h3>Contattaci</h3>
+        <h3 id="contatti-title">Contattaci</h3>
         <p class="small">Per informazioni e iscrizioni usa WhatsApp o il modulo qui sotto.</p>
-        <!-- ⚠️ Sostituisci "your-form-id" con il tuo ID Formspree reale -->
-        <form action="https://formspree.io/f/your-form-id" method="POST" novalidate>
+        <!-- ⚠️ Sostituisci "your-form-id" con il tuo ID Formspree reale su formspree.io -->
+        <form class="contact-form" action="https://formspree.io/f/your-form-id" method="POST" novalidate>
           <label class="small">Nome<br>
-            <input name="name" required minlength="2" autocomplete="name"
-              style="width:100%;padding:8px;margin-top:6px;border-radius:8px;border:1px solid rgba(0,0,0,0.12)">
+            <input name="name" type="text" required minlength="2" autocomplete="name" placeholder="Il tuo nome"/>
           </label>
-          <label class="small" style="display:block;margin-top:8px">Email<br>
-            <input type="email" name="email" required autocomplete="email"
-              style="width:100%;padding:8px;margin-top:6px;border-radius:8px;border:1px solid rgba(0,0,0,0.12)">
+          <label class="small" style="display:block;margin-top:10px">Email<br>
+            <input type="email" name="email" required autocomplete="email" placeholder="tua@email.com"/>
           </label>
-          <label class="small" style="display:block;margin-top:8px">Messaggio<br>
-            <textarea name="message" rows="4" required minlength="10"
-              style="width:100%;padding:8px;margin-top:6px;border-radius:8px;border:1px solid rgba(0,0,0,0.12)"></textarea>
+          <label class="small" style="display:block;margin-top:10px">Messaggio<br>
+            <textarea name="message" rows="4" required minlength="10" placeholder="Come possiamo aiutarti?"></textarea>
           </label>
-          <div style="margin-top:10px">
-            <button class="btn btn-blue" type="submit">Invia richiesta</button>
+          <div style="margin-top:12px">
+            <button class="btn btn-whatsapp" type="submit">Invia richiesta</button>
           </div>
         </form>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
+  <footer class="footer" role="contentinfo">
     <div class="small" id="social">
       Seguici:
-      <a href="https://www.instagram.com/speakupitalian?igsh=MTh2dGd5anRtajkzNg==" target="_blank" rel="noopener">Instagram</a> ·
-      <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a> ·
-      <a href="https://tiktok.com" target="_blank" rel="noopener">TikTok</a>
+      <a href="https://www.instagram.com/speakupitalian?igsh=MTh2dGd5anRtajkzNg==" target="_blank" rel="noopener noreferrer" aria-label="Instagram SpeakUp Italia">Instagram</a> ·
+      <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook SpeakUp Italia">Facebook</a> ·
+      <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" aria-label="TikTok SpeakUp Italia">TikTok</a>
     </div>
     <div class="small" style="margin-top:8px">© 2025 SpeakUp Italia — Progetto educativo di italiano e spagnolo</div>
+    <div class="small" style="margin-top:4px">
+      <a href="404.html" style="color:var(--muted)">Privacy</a>
+    </div>
   </footer>
 </div>
 
-<a class="whatsapp-fab whatsapp-link" href="#" aria-label="Apri WhatsApp">💬</a>
+<!-- Floating WhatsApp -->
+<a class="whatsapp-fab whatsapp-link" href="#" aria-label="Chatta con noi su WhatsApp">💬</a>
 
-<!-- app.js unificato — non includere script.js -->
 <script src="app.js"></script>
 </body>
 </html>
